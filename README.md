@@ -39,7 +39,7 @@
 </table>
 
 <p align="center">
-  <a href="https://github.com/YOUR-GITHUB-USERNAME">
+  <a href="https://github.com/harigovinda_clsi">
     <img src="https://img.shields.io/badge/Shreyas%20Mishra-GEHU%20Dehradun-blue?style=for-the-badge" alt="Shreyas Mishra — GEHU Dehradun"/>
   </a>
 </p>

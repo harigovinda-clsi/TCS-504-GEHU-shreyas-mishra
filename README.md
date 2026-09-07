@@ -2,7 +2,7 @@
 
 # 🎬 Cinema Ticket Booking System
 
-### **TCS-504 — Object-Oriented Programming Project**
+### **TCS-504 — System Design Programming Project**
 
 <p>
   <img src="https://img.shields.io/badge/C%2B%2B-17-blue?style=for-the-badge&logo=cplusplus" alt="C++17"/>
@@ -38,6 +38,15 @@
 </tr>
 </table>
 
+<p align="center">
+  <a href="https://github.com/YOUR-GITHUB-USERNAME">
+    <img src="https://img.shields.io/badge/Shreyas%20Mishra-GEHU%20Dehradun-blue?style=for-the-badge" alt="Shreyas Mishra — GEHU Dehradun"/>
+  </a>
+</p>
+
+<p align="center">
+  <b>Shreyas Mishra</b> · GEHU Dehradun · B.Tech III Year CSE
+</p>
 ---
 
 ## 🎯 Project Overview

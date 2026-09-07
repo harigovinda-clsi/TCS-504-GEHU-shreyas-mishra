@@ -1,0 +1,42 @@
+sequenceDiagram
+    autonumber
+    actor Customer
+    participant BookingService
+    participant Show
+    participant ShowSeat
+    participant PriceCalculator
+    participant Payment
+    participant Booking
+    participant TicketPrinter
+
+    Customer->>BookingService: selectShowAndSeats(showId, seatList)
+    BookingService->>Show: checkAvailability(seatList)
+    loop For each selected seat
+        Show->>ShowSeat: isAvailable()
+        ShowSeat-->>Show: status
+    end
+    Show-->>BookingService: availabilityResult
+    
+    alt Any Seat Unavailable
+        BookingService-->>Customer: Error: Seat already booked / invalid
+    else All Seats Available
+        BookingService->>PriceCalculator: calculateTotal(seatList)
+        PriceCalculator-->>BookingService: totalAmount
+        Customer->>BookingService: pay(methodChoice)
+        BookingService->>Payment: pay(totalAmount)
+        
+        alt Payment Fails
+            Payment-->>BookingService: false
+            BookingService-->>Customer: Payment Failed! Seats released
+        else Payment Succeeds
+            Payment-->>BookingService: true
+            loop For each selected seat
+                BookingService->>ShowSeat: bookSeat()
+                ShowSeat-->>BookingService: status updated to BOOKED
+            end
+            BookingService->>Booking: create(Customer, Show, seatList, totalAmount)
+            Booking-->>BookingService: bookingInstance
+            BookingService->>TicketPrinter: printTicket(bookingInstance)
+            TicketPrinter-->>Customer: Formatted Ticket Output
+        end
+    end

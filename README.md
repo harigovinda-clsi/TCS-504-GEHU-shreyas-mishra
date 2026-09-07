@@ -1,5 +1,5 @@
 ```markdown
-# Movie Ticket Booking System — Terminal Simulation & Architecture
+# Cinema Ticket Booking System
 
 An object-oriented C++17 console application simulating an end-to-end movie ticket reservation platform. Built for **TCS-504: Object-Oriented Programming**, this system models real-world cinema operations including dynamic seat state management, multi-tier pricing, polymorphic payment handling, ticket generation, and transaction rollbacks.
 
@@ -55,9 +55,7 @@ g++ -std=c++17 src/*.cpp -o cinema_booking
 
 ---
 
-## 💻 Simulation Trace & Walkthrough
-
-Below is a complete execution log generated during system runtime, demonstrating state transitions across operations.
+## 💻 Terminal Simulation Trace
 
 ### Scenario 1: Initial Menu & Seat Availability Grid
 
@@ -154,23 +152,37 @@ PLATINUM  C1[] C2[]
 
 ---
 
-## 🛠️ Architecture & SOLID Mapping
+## 🛠️ Architecture & SOLID Principles
 
-| SOLID Principle | Implementation Detail | Location |
-| --- | --- | --- |
-| **Single Responsibility (SRP)** | Isolated pricing logic (`PriceCalculator`) and ticket layout rendering (`TicketPrinter`) from data objects. | `src/11_PriceCalculator.cpp`<br>
+* **Single Responsibility Principle (SRP)**
+* **Implementation:** Isolated pricing calculations inside `PriceCalculator` and ticket layout rendering inside `TicketPrinter` away from pure data objects.
+* **Source Files:** `src/11_PriceCalculator.cpp`, `src/12_TicketPrinter.cpp`
 
-<br>`src/12_TicketPrinter.cpp` |
-| **Open/Closed (OCP)** | New payment channels (e.g., NetBanking, Crypto) can be added by extending `Payment` without modifying `BookingService`. | `src/09_Payment.cpp`<br>
 
-<br>`src/10_PaymentTypes.cpp` |
-| **Liskov Substitution (LSP)** | Derived payment classes (`UpiPayment`, `CardPayment`) seamlessly fulfill the base `Payment` contract at runtime. | `src/10_PaymentTypes.cpp` |
-| **Interface Segregation (ISP)** | Public interfaces remain minimal and tightly scoped to individual domain entity needs. | `src/01_Movie.cpp` - `src/08_Booking.cpp` |
-| **Dependency Inversion (DIP)** | High-level `BookingService` interacts exclusively with the abstract `Payment` interface, not concrete types. | `src/13_BookingService.cpp` |
+* **Open/Closed Principle (OCP)**
+* **Implementation:** New payment channels (e.g., NetBanking, Crypto) can be added by extending the abstract `Payment` class without modifying existing `BookingService` logic.
+* **Source Files:** `src/09_Payment.cpp`, `src/10_PaymentTypes.cpp`
+
+
+* **Liskov Substitution Principle (LSP)**
+* **Implementation:** Derived payment implementations (`UpiPayment`, `CardPayment`, `CashPayment`) seamlessly fulfill the base `Payment` contract at runtime.
+* **Source Files:** `src/10_PaymentTypes.cpp`
+
+
+* **Interface Segregation Principle (ISP)**
+* **Implementation:** Public interfaces remain minimal and tightly scoped to individual domain entity responsibilities.
+* **Source Files:** `src/01_Movie.cpp` through `src/08_Booking.cpp`
+
+
+* **Dependency Inversion Principle (DIP)**
+* **Implementation:** High-level `BookingService` interacts exclusively with the abstract `Payment` interface rather than concrete payment classes.
+* **Source Files:** `src/13_BookingService.cpp`
+
+
 
 ---
 
-## 📋 Requirements Coverage Matrix
+## 📋 Functional Requirements Coverage
 
 * **FR1 (Movie Listing):** Implemented in `Movie` class & displayed via CLI option 1.
 * **FR2 (Show Selection):** Filtered via `Show` and `Screen` aggregation mapping.

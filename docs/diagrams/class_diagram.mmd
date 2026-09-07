@@ -1,0 +1,115 @@
+classDiagram
+    class Cinema {
+        -string name
+        -vector~Screen~ screens
+        +addScreen(Screen)
+        +getName() string
+        +getScreens() vector~Screen~
+    }
+    class Screen {
+        -string screenName
+        -vector~Seat~ seats
+        +addSeat(Seat)
+        +getScreenName() string
+        +getSeats() vector~Seat~
+    }
+    class Seat {
+        -string seatNumber
+        -SeatType type
+        +getSeatNumber() string
+        +getType() SeatType
+    }
+    class Movie {
+        -string title
+        -string language
+        -int durationMinutes
+        +getTitle() string
+        +getLanguage() string
+        +getDuration() int
+    }
+    class Show {
+        -string showId
+        -Movie* movie
+        -Screen* screen
+        -string startTime
+        -vector~ShowSeat~ showSeats
+        +getShowId() string
+        +getMovie() Movie*
+        +getScreen() Screen*
+        +getStartTime() string
+        +getShowSeats() vector~ShowSeat~&
+        +findShowSeat(string) ShowSeat*
+    }
+    class ShowSeat {
+        -Seat seat
+        -SeatStatus status
+        +isAvailable() bool
+        +bookSeat()
+        +releaseSeat()
+        +getSeat() Seat
+        +getStatus() SeatStatus
+    }
+    class Customer {
+        -string name
+        -string phone
+        +getName() string
+        +getPhone() string
+    }
+    class Booking {
+        -static int nextBookingId
+        -string bookingId
+        -Customer customer
+        -Show* show
+        -vector~ShowSeat*~ bookedSeats
+        -double totalAmount
+        -BookingStatus status
+        +getBookingId() string
+        +getShow() Show*
+        +getBookedSeats() vector~ShowSeat*~
+        +getTotalAmount() double
+        +getStatus() BookingStatus
+        +cancel()
+    }
+    class Payment {
+        <<abstract>>
+        +pay(double amount)* bool
+    }
+    class UpiPayment {
+        +pay(double amount) bool
+    }
+    class CardPayment {
+        +pay(double amount) bool
+    }
+    class CashPayment {
+        +pay(double amount) bool
+    }
+    class PriceCalculator {
+        +SILVER_PRICE double
+        +GOLD_PRICE double
+        +PLATINUM_PRICE double
+        +getPrice(SeatType) double
+        +calculateTotal(vector~ShowSeat*~) double
+    }
+    class TicketPrinter {
+        +printTicket(Booking)
+    }
+    class BookingService {
+        -vector~Booking~ bookings
+        +createBooking(Customer, Show*, vector~ShowSeat*~, Payment*) Booking*
+        +cancelBooking(string) bool
+        +findBooking(string) Booking*
+    }
+
+    Cinema "1" *-- "*" Screen
+    Screen "1" *-- "*" Seat
+    Show "*" o-- "1" Movie
+    Show "*" o-- "1" Screen
+    Show "1" *-- "*" ShowSeat
+    ShowSeat "1" o-- "1" Seat
+    Booking "*" o-- "1" Customer
+    Booking "*" o-- "*" ShowSeat
+    Booking "1" *-- "1" Payment
+    Payment <|-- UpiPayment
+    Payment <|-- CardPayment
+    Payment <|-- CashPayment
+    BookingService "1" o-- "*" Booking
